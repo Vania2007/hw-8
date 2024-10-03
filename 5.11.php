@@ -159,11 +159,11 @@ array_walk($students, "print_students");
 echo "</div>";
 function mark($a, $b)
 {
-    return ($a["marks"]["PHP"] + $a["marks"]["JS"] + $a["marks"]["HTML"] <=> $b["marks"]["PHP"] + $b["marks"]["JS"] + $b["marks"]["HTML"]);
+    return (array_sum($a["marks"]) <=> array_sum($b["marks"]));
 }
 function print_students($student)
 {
-    $average_mark = ($student["marks"]["PHP"] + $student["marks"]["JS"] + $student["marks"]["HTML"]) / 3;
+    $average_mark = array_sum($student["marks"]) / count($student["marks"]);
     $result = "<div class='card'>
     <h2>{$student["name"]} {$student["surname"]}</h2>
     <p>Рік народження: {$student["year"]}</p>
@@ -182,14 +182,9 @@ $counter = 0;
 foreach ($split as $group) {
     echo "<h1>Група №$counter</h1><br/>";
     echo "<div class='container'>\n";
-    foreach ($group as $student) {
-        print_students($student);
-    }
-    echo "</div><br/><br/>";
+    array_walk($group, "print_students");
+    echo "</div>";
     $counter++;
 }
-echo "</div>";
-echo <<<EOD
-</body>
-</html>
-EOD;
+echo "</body></html>";
+?>
